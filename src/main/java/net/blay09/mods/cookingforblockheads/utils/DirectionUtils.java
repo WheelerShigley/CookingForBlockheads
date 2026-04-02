@@ -1,0 +1,46 @@
+package net.blay09.mods.cookingforblockheads.utils;
+
+public class DirectionUtils {
+    /**
+     * Returns the result of the mathematical operation, modulus of two numbers.
+     * This is distinct from Java's "mod" operator, %, which returns the remainder of two numbers;
+     * the mathematic operation, "modulus" returns the remainder, in whole multiples
+     * 
+     * @param number operand
+     * @param modulus zero-congruent definition (maximum space for modular arithmetic)
+     * @return 
+     */
+    private static double modulus(final double number, final int modulus) {
+        if(number < 0) {
+            return (modulus - (Math.abs(number) % modulus) ) % modulus;
+        } else {
+            return number % modulus;
+        }
+    }
+
+    /**
+     * Reformats directions (like an "enum") calculated from the nearest cardinal-directions, as
+     * {South, West, North, East} to {0, 1, 2, 3}
+     *
+     * @param yaw latteral-direction of gaze
+     * @return cardinal-direction index
+     */
+    public static int getDirection(final double yaw) {
+        double modified_yaw = ( yaw * (4.0/360.0) ) + 0.5;
+        modified_yaw = modulus(modified_yaw, 4);
+        return (int)Math.floor(modified_yaw);
+    }
+
+    /**
+     * Returns the "handedness" of a current gaze, relative to the nearest cardinal-direction,
+     * represented as being before or after (clockwise) the nearest cardinal-direction
+     * 
+     * @param yaw latteral-direction of gaze
+     * @return truth of being before the center of the nearest cardinal-direction
+     */
+    public static boolean isHalfDirection(final double yaw) {
+        double modified_yaw = yaw * (8.0/360.0);
+        modified_yaw = modulus(modified_yaw, 2);
+        return Math.floor(modified_yaw) == 0;
+    }
+}
