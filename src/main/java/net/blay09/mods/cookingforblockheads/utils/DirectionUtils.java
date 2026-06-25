@@ -9,7 +9,7 @@ public class DirectionUtils {
      *
      * @param number  operand
      * @param modulus zero-congruent definition (maximum space for modular arithmetic)
-     * @return
+     * @return modulus of number, given an operand, with negative-number support
      */
     private static double modulus(final double number, final int modulus) {
         if (number < 0) {
